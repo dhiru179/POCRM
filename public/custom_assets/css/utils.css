@@ -1,0 +1,30 @@
+.utils_center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.mr-1{
+    margin-right: 5px;
+}
+.a_style{
+    text-decoration: none;
+    color: rgb(44, 44, 44);
+}
+
+.flate_box{
+    width: 40px;
+    height:40px;
+    
+    font-size: 40px;
+    color: white;
+    border-radius: 5px;
+    box-shadow: 0px 0px 0px 2px white;
+    
+}
+.thead_sticky{
+    position: sticky;
+    top: 56px;
+    background: #233C46; 
+    color:white;
+    border-style:none;
+}

@@ -1,0 +1,149 @@
+@extends('dashboardLayout')
+@section('title', 'party')
+{{-- @section('dash', 'active') --}}
+@section('dashboard_section')
+    <div class="card" style="overflow: hidden">
+        <nav class="bg-light" style="" aria-label="breadcrumb">
+
+            <ol class="breadcrumb m-0 w-100 h4 d-flex align-items-center px-2" style="height:51px;font-size:21px;">
+                <li class="breadcrumb-item ">Report Principle</li>
+                <!-- <li class="breadcrumb-item active " aria-current="page">Library</li> -->
+            </ol>
+
+        </nav>
+
+        @if (session()->has('msg'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>Message</strong> {{session('msg')}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        @endif
+
+        <div class="py-3">
+            <div class="d-flex mb-3">
+
+                <input type="date" class="form-control rounded-0 mx-2" value="" id="searchByDate"
+                    placeholder="Search By Date">
+                <input type="text" class="form-control rounded-0 mx-2" value="" id="searchByInvoice"
+                    placeholder="Search By Invoice">
+
+                {{-- <input type="text" class="form-control rounded-0 mx-2" value="" id="searchByInvoicePpl"
+                    placeholder="Search By Invoice Principle"> --}}
+
+            </div>
+            <div class="responsive" style="overflow-x: scroll;height:80vh">
+                <table id="dynamic-table" class="table table-striped table-bordered table-hover" style="font-size: 14px">
+                    <thead class="thead_sticky" style="top:0">
+
+
+                        <tr>
+                            <th width="50">#</th>
+                            <th class="text-center" width="">DATE</th>
+                            <th class="text-center" width="">CUSTOMER</th>
+                            <th class="text-center" width="">SELLER</th>
+                            <th class="text-center" width="">INVOICE NO</th>
+                            <th class="text-center" width="">GARN#</th>
+                            <th class="text-center" width="">GARN DATE</th>
+                            <th class="text-center" width="">GARN QTY</th>
+                            <th class="text-center">GARN ACCEPTED</th>
+                            <th class="text-center">GARN SHORT</th>
+                            <th class="text-center">REMARKS</th>
+                            <th class="text-center">BILL PROCESS DATE</th>
+                            <th class="text-center">PAYMENT DATE</th>
+                            <th class="text-center">PAYMENT AMOUNT</th>
+                            <th class="text-center">CGST</th>
+                            <th class="text-center">SGST</th>
+                            <th class="text-center">TOTAL RECEIVABLE</th>
+                            <th class="text-center">PAYMENT RECEIVED</th>
+                            <th class="text-center">PAYMENT DUE</th>
+                            <th class="text-center">REMARKS</th>
+                            <th class="text-center" style="width: 80px">Action</th>
+                        </tr>
+
+
+                    </thead>
+
+                    <tbody class="" id="tbody">
+
+                        @foreach ($reportPrinciple as $key => $item)
+                            <tr>
+                                <td class="">{{ $key + 1 }}</td>
+                                <td class="">{{ $item->created_on }}</td>
+                                <td class="">{{ $item->customer_name }}</td>
+                                <td class="">{{ $item->seller_name }}</td>
+                                <td class="">{{ $item->invoice }}</td>
+                                <td class="text-center">{{ $item->gran }}</td>
+                                <td class="text-center">{{ $item->gran_date }} </td>
+                                <td class="text-center">{{ $item->gran_qty }}</td>
+                                <td class="text-center">{{ $item->gran_accpt_qty }}</td>
+                                <td class="text-center">{{ $item->gran_short_qty }}</td>
+                                <td class="text-center">{{ $item->remarks }}</td>
+                                <td class="text-center">{{ $item->bill_process_date }}</td>
+                                <td class="text-center">{{ $item->payment_date }}</td>
+                                <td class="text-center">{{ $item->payment_amount }}</td>
+                                <td class="text-center">{{ $item->cgst_amount }}</td>
+                                <td class="text-center">{{ $item->sgst_amount }}</td>
+                                <td class="text-center">{{ $item->total_receivable }}</td>
+                                <td class="text-center">{{ $item->payment_recevied }}</td>
+                                <td class="text-center">{{ $item->payment_due }}</td>
+                                <td class="text-center">{{ $item->remarks1 }}</td>
+
+
+                                <td class="text-center">
+                                    <a href="{{ url('admin/invoicePrinciple_') }}{{ urlencode('view' . '_' . $item->id) }}"
+                                        title="View" class="btn btn-primary btn-sm rounded-0"><i class="fa fa-eye"
+                                            aria-hidden="true"></i></a>
+                                    <a href="{{ url('admin/invoicePrinciple_') }}{{ urlencode('edit' . '_' . $item->id) }}"
+                                        title="Edit" class="btn btn-warning btn-sm rounded-0"><i
+                                            class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                                    {{-- <a href="{{ url('admin/a/invoice_principle') }}{{'/'.urlencode('delete'.'_'.$item->id)}}" title="Delete" class="btn btn-danger btn-sm rounded-0"><i class="fa fa-trash-o"
+                                        aria-hidden="true"></i></a> --}}
+                                </td>
+
+
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+    <script>
+        const searchByDate = document.getElementById('searchByDate');
+        const searchByInvoice = document.getElementById('searchByInvoice');
+        // const searchByInvoicePpl = document.getElementById('searchByInvoicePpl');
+
+        const tbody = document.getElementById('tbody');
+        const trList = tbody.children;
+
+        searchByDate.addEventListener('keyup', (e) => {
+            let input = (e.target.value).toUpperCase();
+
+            for (let index = 0; index < trList.length; index++) {
+                let data = (trList[index].children)[2];
+
+                let tdData = (data.innerText).toUpperCase() || (data.innerHtml).toUpperCase();
+                if (tdData.indexOf(input) > -1) {
+                    trList[index].style.display = "";
+                } else {
+                    trList[index].style.display = "none";
+                }
+            }
+        })
+        searchByInvoice.addEventListener('keyup', (e) => {
+            let input = (e.target.value).toUpperCase();
+
+            for (let index = 0; index < trList.length; index++) {
+                let data = (trList[index].children)[1];
+
+                let tdData = (data.innerText).toUpperCase() || (data.innerHtml).toUpperCase();
+                if (tdData.indexOf(input) > -1) {
+                    trList[index].style.display = "";
+                } else {
+                    trList[index].style.display = "none";
+                }
+            }
+        })
+    </script>
+@endsection
