@@ -244,7 +244,7 @@
                     <label for="" class="col-2 col-form-label p-0">Created On</label>
                     <div class="col-8">
                         <input type="date" class="form-control rounded-0" id="total_amount" name="created_on"
-                            value="{{ $created_on }}" required>
+                            value="{{ $created_on }}" >
                             <span class="text-danger">@error('created_on') {{ $message }} @enderror</span>
                     </div>
                 </div>

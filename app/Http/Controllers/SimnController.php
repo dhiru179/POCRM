@@ -129,17 +129,17 @@ class SimnController extends Controller
             $customer_id  = $request->input('customer_id');
             $validator = Validator::make($request->all(), [
                 'name' => 'required',
-                // 'email' => 'required',
-                'phone' => 'required|numeric',
-                'address' => 'required',
 
             ]);
-            $data = [
+            $get_data = [
                 'customer_name' => ucwords($request->input('name')),
                 'email' => $request->input('email'),
                 'phone' => $request->input('phone'),
                 'address' => $request->input('address'),
             ];
+            $data = array_filter($get_data, function ($a) {
+                return isset($a);
+            });
             if ($customer_id > 0) {
                 if ($validator->fails()) {
                     return redirect('admin/customer_' . urlencode('edit' . '_' . $customer_id))
@@ -238,17 +238,16 @@ class SimnController extends Controller
             $customer_id  = $request->input('customer_id');
             $validator = Validator::make($request->all(), [
                 'name' => 'required',
-                // 'email' => 'required',
-                'phone' => 'required|numeric',
-                'address' => 'required',
-
             ]);
-            $data = [
+            $get_data = [
                 'seller_name' => ucwords($request->input('name')),
                 'email' => $request->input('email'),
                 'phone' => $request->input('phone'),
                 'address' => $request->input('address'),
             ];
+            $data = array_filter($get_data,function($a){
+                return isset($a);
+            });
             if ($customer_id > 0) {
                 if ($validator->fails()) {
                     return redirect('admin/seller_' . urlencode('edit' . '_' . $customer_id))

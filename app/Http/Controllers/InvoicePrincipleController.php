@@ -112,30 +112,7 @@ class InvoicePrincipleController extends Controller
         try {
             $validator = Validator::make($request->all(), [
                 'po_id' => 'required',
-                'po_rate' => 'required',
-                'customer_name' => 'required',
-                'invoice' => 'required',
-                'gran' => 'required',
-                'gran_date' => 'required',
-                'gran_qty' => 'required|numeric',
-                'gran_accpt_qty' => 'required|numeric',
-                'gran_short_qty' => 'required|numeric',
-                'remarks' => 'required',
-                'bill_process_date' => 'required',
-                'payment_date' => 'required',
-                'payment_amount' => 'required',
-                'cgst_per' => 'required|numeric',
-                'cgst_amount' => 'required|numeric',
-                'sgst_per' => 'required|numeric',
-                'sgst_amount' => 'required|numeric',
-                'total_receivable' => 'required|numeric',
-                'payment_recevied' => 'required|numeric',
-                'payment_due' => 'required|numeric',
-                'remarks1' => 'required',
-                'created_on' => 'required',
-                'created_by' => 'required',
-
-            ]);
+                ]);
             $id = $request->input('invoice_principle_id');
             // return $request->all();
             function principleData($request)
@@ -164,7 +141,9 @@ class InvoicePrincipleController extends Controller
                     'created_on' => $request->input('created_on'),
                     'created_by' => $request->input('created_by'),
                 ];
-                return $data;
+                return array_filter($data,function($a){
+                    return isset($a);
+                });
             }
             if ($id > 0) {
 

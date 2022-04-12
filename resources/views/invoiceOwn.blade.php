@@ -134,7 +134,7 @@
                     <label for="" class="col-2 col-form-label p-0">Remarks</label>
                     <div class="col-8">
                         <input type="text" class="form-control rounded-0" name="remarks" value="{{ $remarks }}"
-                            required>
+                            >
                         <span class="text-danger">@error('remarks') {{ $message }} @enderror</span>
                     </div>
                 </div>
@@ -143,7 +143,7 @@
                     <label for="" class="col-2 col-form-label p-0">Created On</label>
                     <div class="col-8">
                         <input type="date" class="form-control rounded-0" name="created_on" id="total_amount"
-                            value="{{ $created_on }}" required>
+                            value="{{ $created_on }}" >
                         <span class="text-danger">@error('created_on') {{ $message }} @enderror</span>
                     </div>
                 </div>

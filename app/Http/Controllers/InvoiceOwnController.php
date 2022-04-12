@@ -106,15 +106,6 @@ class InvoiceOwnController extends Controller
             $validator = Validator::make($request->all(), [
                 'po_id' => 'required',
                 'invoice' => 'required',
-                'payment_date' => 'required',
-                'gran_accpt_qty' => 'required',
-                'total_receive' => 'required|numeric',
-                'payment_recevied' => 'required|numeric',
-                'short_payment' => 'required|numeric',
-                'remarks' => 'required',
-                'created_on' => 'required',
-                'created_by' => 'required',
-
             ]);
 
             $invoice_own_id = $request->input('invoice_own_id'); //for edit and view
@@ -133,8 +124,11 @@ class InvoiceOwnController extends Controller
                     'created_on' => $request->input('created_on'),
                     'created_by' => $request->input('created_by'),
                 ];
-                return $data;
+                return array_filter($data,function($a){
+                    return isset($a);
+                });
             }
+            
             if ($invoice_own_id > 0) {
                 if ($validator->fails()) {
                     return redirect('admin/invoice_own_' . urlencode('edit' . '_' . $invoice_own_id))
